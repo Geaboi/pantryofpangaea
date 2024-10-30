@@ -89,7 +89,7 @@ export default function Contact() {
         {/* Contact Information */}
         <div className="mt-8 text-center">
           <p className="text-gray-600">Or reach us at:</p>
-          <a href="mailto:pantryofpangaea@gmail.com" className="text-blue-600">pantryofpangaea@gmail.com</a>
+          <a href="mailto:pantryofpangaea2@gmail.com" className="text-blue-600">pantryofpangaea2@gmail.com</a>
           <p className="text-gray-600 mt-4">Follow us on:</p>
           <div className="flex justify-center gap-4 mt-2">
             <a href="https://twitter.com" target="_blank" className="text-blue-500 hover:underline">

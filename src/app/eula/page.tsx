@@ -76,7 +76,7 @@ export default function EULA() {
           <section className="mt-8">
             <h2 className="text-xl font-semibold mb-2 text-gray-900">Contact Us</h2>
             <p>If you have questions about this Agreement, please contact us at:</p>
-            <a href="mailto:pantryofpangaea@gmail.com"className="text-blue-600">pantryofpangaea@gmail.com</a>
+            <a href="mailto:pantryofpangaea2@gmail.com"className="text-blue-600">pantryofpangaea2@gmail.com</a>
           </section>
         </div>
       </div>

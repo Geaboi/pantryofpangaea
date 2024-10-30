@@ -17,9 +17,9 @@ export async function POST(req: NextRequest) {
   // Email options
   const mailOptions = {
     from: email,
-    to: 'pantryofpangaea@gmail.com', // Your support email
-    subject: 'Contact Form Submission: ${subject}',
-    text: 'Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}',
+    to: 'pantryofpangaea2@gmail.com', // Your support email
+    subject: `Contact Form Submission: ${subject}`,
+    text: `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`,
   };
 
   try {

@@ -64,7 +64,7 @@ export default function privacy() {
         </PrivacySection>
 
         <PrivacySection title="9. Contact Us">
-          If you have any questions or concerns about this Privacy Policy or our practices, please contact us at <a href="mailto:pantryofpangaea@gmail.com" className="text-blue-600 mt-2">pantryofpangaea@gmail.com</a>
+          If you have any questions or concerns about this Privacy Policy or our practices, please contact us at <a href="mailto:pantryofpangaea2@gmail.com" className="text-blue-600 mt-2">pantryofpangaea2@gmail.com</a>
         </PrivacySection>
       </div>
     </div>
