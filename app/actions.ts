@@ -128,3 +128,13 @@ export const signOutAction = async () => {
   await supabase.auth.signOut();
   return redirect("/sign-in");
 };
+
+export const postRecipe = async (formData: FormData) => {
+  const recipe = formData.get("recipe")?.toString();
+  const ingredients = formData.get("ingredients")?.toString();
+  const category = formData.get("category")?.toString();
+  const description = formData.get("description")?.toString();
+
+  
+ 
+};

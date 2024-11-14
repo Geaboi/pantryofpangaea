@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { postRecipe } from "@/app/actions";
 
 export default function PostRecipe() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -8,15 +9,16 @@ export default function PostRecipe() {
   const [ingredients, setIngredients] = useState('');
   const [category, setCategory] = useState('');
   const [description, setDescription] = useState('');
-  const [response, setResponse] = useState('');
 
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
   };
 
-  const handleSubmit = () => {
-    console.log("Hello");
+  const handleSubmit = async() => {
+    await postRecipe({ recipe, ingredients, category, description});
   }
+
+  
   return (
     <div>
       <button
@@ -66,19 +68,19 @@ export default function PostRecipe() {
 
             {/* Modal Body */}
             <div className="p-4">
-             <form className="p-4 md:p-5">
+             <form onSubmit={handleSubmit} method="post" className="p-4 md:p-5">
                 <div className="grid gap-4 mb-4 grid-cols-2">
                     <div className="col-span-2">
-                        <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Recipe</label>
-                        <input value={recipe} onChange={(e) => setRecipe(e.target.value)} type="text" name="name" id="name" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Type Recipe Name" required />
+                        <label htmlFor="recipe" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Recipe</label>
+                        <input value={recipe} onChange={(e) => setRecipe(e.target.value)} type="text" name="recipe" id="recipe" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Type Recipe Name" required />
                     </div>
                     <div className="col-span-2 sm:col-span-1">
                         <label htmlFor="ingredients" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Ingredients</label>
-                        <textarea id="description"  className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="List Ingredients Here"></textarea>
+                        <textarea value={ingredients} onChange={(e) => setIngredients(e.target.value)} id="description"  className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="List Ingredients Here"></textarea>
                     </div>
                     <div className="col-span-2 sm:col-span-1">
                         <label htmlFor="category" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Category</label>
-                        <select defaultValue={'Defualt'} id="category" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                        <select value={category} onChange={(e)=>setCategory(e.target.value)} id="category" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                             <option disabled value="Defualt">Select category</option>
                             <option value="TV">Asian</option>
                             <option value="PC">American</option>
@@ -88,7 +90,7 @@ export default function PostRecipe() {
                     </div>
                     <div className="col-span-2">
                         <label htmlFor="description" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Product Description</label>
-                        <textarea id="description"  className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Write product description here"></textarea>                    
+                        <textarea value={description} onChange={(e)=>setDescription(e.target.value)} id="description"  className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Write product description here"></textarea>                    
                     </div>
                 </div>
                 <button type="submit" className="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" >
