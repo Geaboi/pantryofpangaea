@@ -1,21 +1,26 @@
 "use client";
 
 import { useState } from "react";
-import { postRecipe } from "@/app/actions";
+import { useFormStatus } from "react-dom";
 
-export default function PostRecipe() {
+
+
+export default function PostRecipe({formAction}) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [recipe, setRecipe] = useState('');
   const [ingredients, setIngredients] = useState('');
-  const [category, setCategory] = useState('');
+  const [category, setCategory] = useState('Asian');
   const [description, setDescription] = useState('');
 
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
   };
 
-  const handleSubmit = async() => {
-    await postRecipe({ recipe, ingredients, category, description});
+  const handleSubmit = async(e) => {
+    e.preventDefault();
+    const formData = { recipe, ingredients, category, description };
+    await formAction(formData);
+    toggleModal();
   }
 
   
@@ -82,10 +87,10 @@ export default function PostRecipe() {
                         <label htmlFor="category" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Category</label>
                         <select value={category} onChange={(e)=>setCategory(e.target.value)} id="category" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                             <option disabled value="Defualt">Select category</option>
-                            <option value="TV">Asian</option>
-                            <option value="PC">American</option>
-                            <option value="GA">French</option>
-                            <option value="PH">African</option>
+                            <option value="Asian">Asian</option>
+                            <option value="American">American</option>
+                            <option value="French">French</option>
+                            <option value="African">African</option>
                         </select>
                     </div>
                     <div className="col-span-2">

@@ -4,6 +4,7 @@ import { encodedRedirect } from "@/utils/utils";
 import { createClient } from "@/utils/supabase/server";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
+import { SupabaseClient } from "@supabase/supabase-js";
 
 export const signUpAction = async (formData: FormData) => {
   const email = formData.get("email")?.toString();
@@ -130,11 +131,38 @@ export const signOutAction = async () => {
 };
 
 export const postRecipe = async (formData: FormData) => {
-  const recipe = formData.get("recipe")?.toString();
-  const ingredients = formData.get("ingredients")?.toString();
-  const category = formData.get("category")?.toString();
-  const description = formData.get("description")?.toString();
+  //Access User Id
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
 
-  
+  if (!user) {
+    return redirect("/sign-in");
+  }
  
+  //Get the form data 
+  const recipe = formData['recipe'];
+  const ingredients = formData['ingredients'];
+  const category = formData['category'];
+  const description = formData['description'];
+
+  //Post data into the database
+  const {data, error} = await supabase
+  .from('recipes')
+  .insert({
+    title: recipe,
+    author: user['id'],
+    ingredients: [ingredients],
+    instructions: [description],
+    tags: [category],
+    deleted: false
+  })
+
+  if (error) {
+    console.error("Error posting recipe:", error);
+  } else {
+    console.log("Recipe posted successfully:", data); 
+  }
+
 };
