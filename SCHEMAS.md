@@ -1,5 +1,15 @@
 # Table Schemas
 
+## auth.users
+
+| Column | Type | Primary? |
+|-|-|-|
+| id | uuid | Yes |
+| email | varchar | |
+There are already skeleton pages for sign up, sign in, and reset password
+Be careful with changing email, that could break things
+Usernames don't exist yet, but we can add them
+
 ## public.recipes
 
 | Column | Type | Primary? | Default value | Expected value | Nullable? |
@@ -23,3 +33,4 @@
 | reviewer_id | uuid | | | ID of reviewer, fetch from auth.users | No |
 | content | varchar | | NULL | The review message | Yes |
 | rating | int2 | | | The numerical rating of the recipe | No |
+| deleted | bool | | FALSE | Whether the review is "deleted" and should be hidden | No |
