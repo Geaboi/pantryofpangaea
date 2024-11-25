@@ -8,7 +8,7 @@ export function Footer() {
             {/* About Section */}
             <div className="flex-1 mt-4 md:mt-0">
               <p className="text-sm md:text-base">
-                Welcome to our recipe-sharing platform, where food lovers gather to share their passion for cooking. Discover new recipes, connect with fellow chefs, and explore endless culinary possibilities.
+                Welcome to our Pantry of Pangaea, where food lovers gather to share their passion for cooking. Discover new recipes, connect with fellow chefs, and explore endless culinary possibilities.
               </p>
             </div>
           </div>

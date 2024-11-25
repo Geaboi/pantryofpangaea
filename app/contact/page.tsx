@@ -1,6 +1,6 @@
 "use client";
-import { Footer } from "@/components/footer";
-import { Header } from "@/components/header";
+import { Footer } from "../components/footer";
+import { Header } from "../components/header";
 import { useState } from "react";
 
 
@@ -14,7 +14,7 @@ export default function Contact() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const response = await fetch('/api/sendEmail', {
+    const response = await fetch('/sendEmail', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

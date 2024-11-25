@@ -1,9 +1,11 @@
 import { ReactNode } from 'react';
-import { Footer } from "@/components/footer";
+import { Footer } from "../components/footer";
+import { Header } from "../components/header"
 
 export default function TermsOfService() {
   return (
     <section>
+    <Header />
     <div className="bg-white text-gray-800 min-h-screen p-8 sm:p-12 lg:p-20">
       <div className="max-w-3xl mx-auto">
         <h1 className="text-4xl font-bold text-center mb-6 text-gray-900">Terms of Service</h1>
