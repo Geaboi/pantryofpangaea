@@ -130,6 +130,7 @@ export const signOutAction = async () => {
   return redirect("/sign-in");
 };
 
+//Api Post request for users to post into the database
 export const postRecipe = async (formData: FormData) => {
   //Access User Id
   const supabase = await createClient();
@@ -166,3 +167,18 @@ export const postRecipe = async (formData: FormData) => {
   }
 
 };
+
+//Dunno if this is needed yet, but should retrieve the recipe data
+export const getRecipe = async(recipe: any) => {
+  const supabase = await createClient();
+
+  const {data, error} = await supabase
+  .from('recipes')
+  .select()
+  .eq('id',recipe.id)
+}
+
+//API Post request for reviews
+export const postReview = async(formData: Formdata) => {
+  
+}
