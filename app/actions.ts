@@ -169,14 +169,22 @@ export const postRecipe = async (formData: FormData) => {
 };
 
 //Dunno if this is needed yet, but should retrieve the recipe data
-export const getRecipe = async(recipe: any) => {
+export const getRecipe = async(id : string) => {
   const supabase = await createClient();
-
   const {data, error} = await supabase
   .from('recipes')
   .select()
-  .eq('id',recipe.id)
+  .eq('id',id)
+  .eq('deleted', false)
+
+  if (error) {
+    console.error("Database error:", error);
+    return { data: null, error: "Database query failed" };
 }
+
+return { data, error: null };
+}
+
 
 //API Post request for reviews
 export const postReview = async(formData: Formdata) => {
