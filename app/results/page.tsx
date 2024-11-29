@@ -7,14 +7,12 @@ export default async function Results(props: {
     page?: string;
   }>;
 }) {
-  // TODO: Fix this chunk to fetch search params from URL
-  // const params = new URLSearchParams(useSearchParams());
-  // params.set('query', 'pasta');
-  // const searchParams = await props.searchParams;
-  // const query = searchParams?.query || '';
-  // const currentPage = Number(searchParams?.page) || 0;
-
-  // const tags = query.split(',');
+  // Fetch search params from URL
+  const params = props.searchParams;
+  const searchParams = await props.searchParams;
+  const query = searchParams?.query || '';
+  const currentPage = Number(searchParams?.page) || 0;
+  const tags = query.split(',');
 
   const supabase = await createClient();
 
@@ -22,8 +20,8 @@ export default async function Results(props: {
     .from('recipes')
     .select()
     .eq('deleted', false)
-    .contains('tags', []) // TODO: Replace [] with tags
-    .range(0, 49);  // TODO: Add (currentPage * 50) to both vals
+    .contains('tags', tags)
+    .range(0 + (currentPage * 50), 49 + (currentPage * 50));
 
   if (error)
     return <main>We couldn't reach the database. Please try again later.</main>;
@@ -37,14 +35,14 @@ export default async function Results(props: {
             <h1>{recipe.title}</h1>
             <h3>Ingredients:</h3>
             <ul>
-              {recipe.ingredients.map((ingredient, index) => (
+              {recipe.ingredients.map((ingredient: string, index: number) => (
                 <li key={index}>{ingredient}</li>
               ))}
             </ul>
             <h3>Instructions:</h3>
             <ol>
-              {recipe.instructions.map((instruction) => (
-                <li>{instruction}</li>
+              {recipe.instructions.map((instruction: string, index: number) => (
+                <li key={index}>{instruction}</li>
               ))}
             </ol>
           </div>
