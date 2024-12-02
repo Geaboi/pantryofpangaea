@@ -164,5 +164,35 @@ export const postRecipe = async (formData: FormData) => {
   } else {
     console.log("Recipe posted successfully:", data); 
   }
+};
 
+export const postRecipeNew = async (title: string, ingredients: string[], instructions: string[], tags: string[]): Promise<boolean> => {
+  const supabase = await createClient();
+  const {
+      data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+      return redirect("/sign-in");
+  }
+
+  //Post data into the database
+  const {data, error} = await supabase
+      .from('recipes')
+      .insert({
+          title: title,
+          author: user['id'],
+          ingredients: ingredients,
+          instructions: instructions,
+          tags: tags,
+          deleted: false
+      });
+
+  if (error) {
+      console.error("Error posting recipe: ", error);
+      return new Promise((resolve, reject) => resolve(false));
+  } else {
+      console.log("Recipe posted successfully: ", data);
+      return new Promise((resolve, reject) => resolve(true));
+  }
 };
