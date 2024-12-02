@@ -40,7 +40,7 @@ export default function RootLayout({
           <main className="min-h-screen flex flex-col items-center">
             <Header />
             <div className="flex-grow w-screen bg-slate-300 dark:bg-slate-800 flex flex-col items-center">
-              <div className="text-slate-800 dark:text-slate-300 max-w-5xl py-5">
+              <div className="text-slate-800 dark:text-slate-300 border-slate-800 dark:border-slate-300 max-w-5xl py-5">
                 {children}
               </div>
             </div>
