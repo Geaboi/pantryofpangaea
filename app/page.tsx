@@ -40,8 +40,6 @@ export default function Home() {
 
   return (
     <>
-      
-
       {/* Hero Section */}
       <section className="bg-gradient-to-r from-orange-400 to-pink-500 text-white py-20 text-center">
         <h1 className="text-5xl lg:text-7xl font-extrabold mb-6">
@@ -65,7 +63,7 @@ export default function Home() {
           {topRecipes.map((recipe) => (
             <div
               key={recipe.id}
-              className="border-2 border-yellow-500 rounded-lg p-4 shadow-md hover:shadow-lg transition-shadow"
+              className="border-2 border-yellow-500 rounded-lg p-4 shadow-md hover:shadow-lg transition-shadow bg-white"
             >
               <h3 className="text-xl font-bold text-gray-800">{recipe.name}</h3>
               <p className="text-gray-600 mb-2">{recipe.description}</p>

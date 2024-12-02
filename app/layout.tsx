@@ -6,8 +6,8 @@
 // import { GeistSans } from "geist/font/sans";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
+import Background from "@/components/background"; // Import Background component
 import { ThemeProvider } from "next-themes";
-import Link from 'next/link';
 import './globals.css';
 
 const defaultUrl = process.env.VERCEL_URL
@@ -37,10 +37,12 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+          {/* Add the Background component */}
+          <Background />
           <main className="min-h-screen flex flex-col items-center">
             <Header />
-            <div className="flex-grow w-screen bg-slate-300 dark:bg-slate-800 flex flex-col items-center">
-              <div className="text-slate-800 dark:text-slate-300 border-slate-800 dark:border-slate-300 max-w-5xl py-5">
+            <div className="flex-grow w-screen flex flex-col items-center">
+              <div className="text-slate-800 dark:text-slate-300 max-w-5xl py-5">
                 {children}
               </div>
             </div>
