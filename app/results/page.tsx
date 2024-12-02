@@ -41,13 +41,13 @@ export default async function Results(props: {
           </Link>
             <h3>Ingredients:</h3>
             <ul>
-              {recipe.ingredients.map((ingredient, index) => (
+              {recipe.ingredients.map((ingredient : string, index : number) => (
                 <li key={index}>{ingredient}</li>
               ))}
             </ul>
             <h3>Instructions:</h3>
             <ol>
-              {recipe.instructions.map((instruction) => (
+              {recipe.instructions.map((instruction:string) => (
                 <li>{instruction}</li>
               ))}
             </ol>

@@ -1,6 +1,7 @@
-import { getRecipe } from "@/app/actions";
+import { getRecipe, getReview } from "@/app/actions";
 import PostReview from "@/components/review";
 import { createClient } from "@/utils/supabase/server";
+import {postReview} from "@/app/actions"
 import { Power } from "lucide-react";
 import { brotliCompressSync } from "zlib";
 
@@ -16,17 +17,24 @@ export default async function RecipeDetails({ params }: { params: { recipeId: st
     }   
     try {
         // Fetc the recipe data
-        const { data, error } = await getRecipe(decodeURIComponent(recipeId));
+        const decoded = decodeURIComponent(recipeId);
+        const { data: recipeData, error: recipeError } = await getRecipe(decoded);
         const supabase = await createClient();
+        //Fetch the reviews
+        const { data: reviewData, error: reviewError } = await getReview(decoded);
 
-        const {user} = await supabase.auth.getUser();
 
-        if (error || !data ) {
-            throw new Error(error || "Recipe not found.");
+        if (recipeError || !recipeData) {
+            throw new Error(recipeError);
+        }
+        else if(!reviewData || reviewError ) {
+            throw new Error(reviewError);
         }
         
         //Chooses the first item in the returned object
-        const recipe = data[0];
+        const recipe = recipeData[0];
+
+
         // Return the recipe details and mapping it through
         return (
             <div>
@@ -43,10 +51,16 @@ export default async function RecipeDetails({ params }: { params: { recipeId: st
                         <li key={index}>{instruction}</li>
                     ))}
                 </ol>
-                <PostReview/>
-            </div>
+                <PostReview formAction={postReview} recipeId={decodeURIComponent(recipeId)} />        
+                <h3>Reviews:</h3>
+                <ul>
+                    {reviewData?.map((review: any, index: number) => (
+                        <li key={index}>{review.content} {review.rating}</li> // Assuming review has a `comment` field
+                    ))}
+                </ul>   
+                 </div>
         );
-    } catch (err) {
+    } catch (err : any) {
         return <h1>Error: {err.message}</h1>;
     }
 }

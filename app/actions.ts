@@ -187,6 +187,43 @@ return { data, error: null };
 
 
 //API Post request for reviews
-export const postReview = async(formData: Formdata) => {
+export const postReview = async ({ review, rating, recipeId }: { review: string, rating: number, recipeId: string }) => {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    return redirect("/sign-in");
+  }
   
+  const {data, error} = await supabase
+  .from('reviews')
+  .insert({
+    recipe_id: recipeId,
+    reviewer_id: user['id'],
+    content: review,
+    rating: rating
+  })
+
+  if(error) {
+    console.log(error);
+  }
+
+}
+
+export const getReview = async(recipeId : string) => {
+  const supabase = await createClient();
+  const {data, error} = await supabase
+  .from('reviews')
+  .select()
+  .eq('recipe_id	',recipeId)
+  .eq('deleted', false)
+
+  if (error) {
+    console.error("Database error:", error);
+    return { data: null, error: "Database query failed" };
+}
+
+return { data, error: null };
 }
