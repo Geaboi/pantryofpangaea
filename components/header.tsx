@@ -1,8 +1,42 @@
+import Link from "next/link";
+
 export default function Header() {
-    return (
-        <div className="h-16 w-screen px-2 bg-slate-400 dark:bg-slate-900 flex flex-row justify-start items-center space-x-2">
-            <p className="h-12 px-2 rounded-lg bg-slate-300 dark:bg-slate-800 text-slate-800 dark:text-slate-300 text-center align-middle">Pantry of Pangaea</p>
-            <p className="h-12 px-2 rounded-lg bg-slate-300 dark:bg-slate-800 text-slate-800 dark:text-slate-300 text-center align-middle">Some login button idk</p>
+  return (
+    <header className="bg-gradient-to-r from-green-400 via-yellow-400 to-orange-500 text-white shadow-lg w-full">
+      <nav className="container mx-auto px-4 py-4 flex justify-between items-center">
+        {/* Logo */}
+        <div className="text-3xl font-bold tracking-wider">
+          <Link href="/">Pantry of Pangaea</Link>
         </div>
-    );
+        {/* Navigation Links */}
+        <ul className="flex space-x-6 text-lg">
+          <li>
+            <Link href="/" className="hover:underline">
+              Home
+            </Link>
+          </li>
+          <li>
+            <Link href="/sign-up" className="hover:underline">
+              Sign Up
+            </Link>
+          </li>
+          <li>
+            <Link href="/sign-in" className="hover:underline">
+              Login
+            </Link>
+          </li>
+          <li>
+            <Link href="/search" className="hover:underline">
+              Search
+            </Link>
+          </li>
+          <li>
+            <Link href="/post-recipe" className="hover:underline">
+              Post Recipe
+            </Link>
+          </li>
+        </ul>
+      </nav>
+    </header>
+  );
 }
