@@ -1,41 +1,70 @@
-import { signOutAction } from "@/app/actions";
-import { signInAction } from "@/app/actions";
-import { hasEnvVars } from "@/utils/supabase/check-env-vars";
+"use client";
+
 import Link from "next/link";
-import { Badge } from "./ui/badge";
-import { Button } from "./ui/button";
-import { createClient } from "@/utils/supabase/server";
+import { usePathname } from "next/navigation";
+import { useState } from "react";
 
-export default async function Header() {
-    //Check if User is signed in or out
-    const supabase = await createClient();
+export default function Header() {
+  const pathname = usePathname();
+  const [isSearchActive, setIsSearchActive] = useState(false);
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const isSignInPage = pathname === "/sign-in";
+  const isSignUpPage = pathname === "/sign-up";
 
-    if(user) {
-        return (
-            <div className="h-16 w-screen px-2 bg-slate-400 dark:bg-slate-900 flex flex-row justify-start items-center space-x-2">
-                <p className="h-12 px-2 rounded-lg bg-slate-300 dark:bg-slate-800 text-slate-800 dark:text-slate-300 text-center align-middle">Pantry of Pangaea</p>
-                <form action={signOutAction}>
-            <Button type="submit" variant={"outline"}>
-              Sign out
-            </Button>
-          </form>
+  return (
+    <header
+      className="bg-gradient-to-r from-green-400 via-yellow-400 to-orange-500 text-white shadow-lg w-full"
+      onMouseLeave={() => setIsSearchActive(false)} // Fade out when cursor leaves the header
+    >
+      <nav className="container mx-auto px-4 py-4 flex justify-between items-center relative">
+        {/* Logo */}
+        <div className="text-3xl font-bold tracking-wider">
+          <Link href="/">Pantry of Pangaea</Link>
+        </div>
+
+        {/* Navigation Area */}
+        <div className="flex-grow flex justify-end items-center space-x-6 text-lg">
+          {!isSearchActive && (
+            <>
+              {!isSignInPage && (
+                <Link href="/sign-in" className="hover:underline">
+                  Sign In
+                </Link>
+              )}
+              {!isSignUpPage && (
+                <Link href="/sign-up" className="hover:underline">
+                  Sign Up
+                </Link>
+              )}
+              <Link href="/post-recipe" className="hover:underline">
+                Post Recipe
+              </Link>
+            </>
+          )}
+
+          {/* Search Button */}
+          <div
+            className={`hover:cursor-pointer transition-all duration-500 ${
+              isSearchActive ? "opacity-0 pointer-events-none" : ""
+            }`}
+            onMouseEnter={() => setIsSearchActive(true)} // Activate search on hover
+          >
+            Search
+          </div>
+
+          {/* Search Bar */}
+          {isSearchActive && (
+            <div className="absolute right-4 w-[400px] transition-transform duration-500 ease-in-out">
+              <input
+                type="text"
+                placeholder="Search recipes..."
+                className="w-full px-4 py-2 bg-white text-gray-800 border border-yellow-400 rounded-md shadow-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 transition-all duration-300"
+              />
             </div>
-        );
-    }
-    else {
-        return (
-            <div className="h-16 w-screen px-2 bg-slate-400 dark:bg-slate-900 flex flex-row justify-start items-center space-x-2">
-                <p className="h-12 px-2 rounded-lg bg-slate-300 dark:bg-slate-800 text-slate-800 dark:text-slate-300 text-center align-middle">Pantry of Pangaea</p>
-                <form action={signInAction}>
-                    <Button type="submit" variant={"outline"}>
-                    Sign In
-                    </Button>
-                </form>
-            </div>
-        );
-    }
+          )}
+        </div>
+      </nav>
+    </header>
+  );
 }
+
