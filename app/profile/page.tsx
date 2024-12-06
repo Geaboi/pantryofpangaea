@@ -17,7 +17,7 @@ export default async function Profile() {
   const { data, error } = await getUserPosts(user.id);
 
   if (error) {
-    console.error("Error fetching recipes:", error.message);
+    console.error("Error fetching recipes:", error);
   }
 
   const profileImage = user.user_metadata?.avatar_url || "/default-profile.jpg";
