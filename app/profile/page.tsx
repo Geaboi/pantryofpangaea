@@ -1,13 +1,26 @@
-"use client";
-import { useEffect, useState } from 'react';
+import { createClient } from "@/utils/supabase/server";
+import Image from "next/image";
+import { redirect } from "next/navigation";
+import { signOutAction, getUserPosts, deleteUserPost } from "../actions";
 
+export default async function Profile() {
+  const supabase = await createClient();
 
-export default function Profile() {
-  const [recipes, setRecipes] = useState([
-    { id: 1, title: 'Spaghetti Carbonara', date: '2024-10-05' },
-    { id: 2, title: 'Vegan Tacos', date: '2024-11-01' },
-    { id: 3, title: 'Chicken Curry', date: '2024-11-10' },
-  ]);
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    return redirect("/sign-in");
+  }
+
+  const { data, error } = await getUserPosts(user.id);
+
+  if (error) {
+    console.error("Error fetching recipes:", error.message);
+  }
+
+  const profileImage = user.user_metadata?.avatar_url || "/default-profile.jpg";
 
   return (
     <section className="bg-gray-100 min-h-screen">
@@ -18,12 +31,18 @@ export default function Profile() {
         <div className="bg-white p-6 rounded-lg shadow-md mb-8">
           <h2 className="text-2xl font-semibold text-gray-800 mb-4">My Recipes</h2>
           <ul className="space-y-4">
-            {recipes.map((recipe) => (
-              <li key={recipe.id} className="flex justify-between items-center">
-                <span className="text-gray-700">{recipe.title}</span>
-                <span className="text-gray-500 text-sm">{recipe.date}</span>
-              </li>
-            ))}
+            {data && data.length > 0 ? (
+              data.map((recipe) => (
+                <li key={recipe.id} className="flex justify-between items-center">
+                  <span className="text-gray-700">{recipe.title}</span>
+                  <span className="text-gray-500 text-sm">
+                    {new Date(recipe.created_at).toLocaleDateString()}
+                  </span>
+                </li>
+              ))
+            ) : (
+              <p className="text-gray-600">No recipes found.</p>
+            )}
           </ul>
         </div>
       </div>
