@@ -130,6 +130,7 @@ export const signOutAction = async () => {
   return redirect("/sign-in");
 };
 
+//Api Post request for users to post into the database
 export const postRecipe = async (formData: FormData) => {
   //Access User Id
   const supabase = await createClient();
@@ -149,15 +150,15 @@ export const postRecipe = async (formData: FormData) => {
 
   //Post data into the database
   const {data, error} = await supabase
-  .from('recipes')
-  .insert({
-    title: recipe,
-    author: user['id'],
-    ingredients: [ingredients],
-    instructions: [description],
-    tags: [category],
-    deleted: false
-  })
+    .from('recipes')
+    .insert({
+      title: recipe,
+      author: user['id'],
+      ingredients: [ingredients],
+      instructions: [description],
+      tags: [category],
+      deleted: false
+    });
 
   if (error) {
     console.error("Error posting recipe:", error);
@@ -169,30 +170,156 @@ export const postRecipe = async (formData: FormData) => {
 export const postRecipeNew = async (title: string, ingredients: string[], instructions: string[], tags: string[]): Promise<boolean> => {
   const supabase = await createClient();
   const {
-      data: { user },
+    data: { user },
   } = await supabase.auth.getUser();
 
   if (!user) {
-      return redirect("/sign-in");
+    return redirect("/sign-in");
   }
 
   //Post data into the database
   const {data, error} = await supabase
-      .from('recipes')
-      .insert({
-          title: title,
-          author: user['id'],
-          ingredients: ingredients,
-          instructions: instructions,
-          tags: tags,
-          deleted: false
-      });
+    .from('recipes')
+    .insert({
+      title: title,
+      author: user['id'],
+      ingredients: ingredients,
+      instructions: instructions,
+      tags: tags,
+      deleted: false
+    });
+
 
   if (error) {
-      console.error("Error posting recipe: ", error);
-      return new Promise((resolve, reject) => resolve(false));
+    console.error("Error posting recipe: ", error);
+    return new Promise((resolve, reject) => resolve(false));
   } else {
-      console.log("Recipe posted successfully: ", data);
-      return new Promise((resolve, reject) => resolve(true));
+    console.log("Recipe posted successfully: ", data);
+    tags.forEach(async (tag: string) => {
+      // Keep track of tag counts
+      const {data: tagData, error: tagError} = await supabase
+        .from('tags')
+        .select()
+        .eq('tag', tag);
+      
+      if(!tagError && tagData) {
+        if(tagData.length == 0) {
+          // Create the tag
+          const _ = await supabase
+            .from('tags')
+            .insert({
+              tag: tag,
+              use_count: 1
+            });
+        } else {
+          // Update the tag
+          const tagId = tagData[0].id;
+          const newTagCount = tagData[0].use_count + 1;
+          const _ = await supabase
+            .from('tags')
+            .update({
+              tag: tag,
+              use_count: newTagCount
+            })
+            .eq('id', tagId);
+        }
+      }
+    });
+    return new Promise((resolve, reject) => resolve(true));
   }
+};
+
+
+
+//Dunno if this is needed yet, but should retrieve the recipe data
+export const getRecipe = async(id : string) => {
+  const supabase = await createClient();
+  const {data, error} = await supabase
+    .from('recipes')
+    .select()
+    .eq('id',id)
+    .eq('deleted', false);
+
+  if (error) {
+    console.error("Database error:", error);
+    return { data: null, error: "Database query failed" };
+  }
+
+  return { data, error: null };
+};
+
+
+//API Post request for reviews
+export const postReview = async ({ review, rating, recipeId }: { review: string, rating: number, recipeId: string }) => {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    return redirect("/sign-in");
+  }
+  
+  const {data: _, error} = await supabase
+    .from('reviews')
+    .insert({
+      recipe_id: recipeId,
+      reviewer_id: user['id'],
+      content: review,
+      rating: rating
+    });
+
+  if(error) {
+    console.log(error);
+    return new Promise((resolve, reject) => resolve(false));
+  } else {
+    const {data: recipeData, error: recipeError} = await supabase
+      .from('recipes')
+      .select()
+      .eq('id', recipeId);
+
+    if(!recipeError && recipeData) {
+      const num_ratings = recipeData[0].num_ratings + 1;
+      const new_avg_rating = (Math.round(recipeData[0].average_rating * recipeData[0].num_ratings) + rating) / (recipeData[0].num_ratings + 1);
+      const _ = await supabase
+        .from('recipes')
+        .update({
+          average_rating: new_avg_rating,
+          num_ratings
+        })
+        .eq('id', recipeId);
+    }
+    return new Promise((resolve, reject) => resolve(true));
+  }
+};
+
+export const getReview = async(recipeId : string) => {
+  const supabase = await createClient();
+  const {data, error} = await supabase
+    .from('reviews')
+    .select()
+    .eq('recipe_id	',recipeId)
+    .eq('deleted', false);
+
+  if (error) {
+    console.error("Database error:", error);
+    return { data: null, error: "Database query failed" };
+  }
+
+  return { data, error: null };
+};
+
+export const getUser = async(userId : string) => {
+  const supabase = await createClient();
+  const {data, error} = await supabase
+    .from('userdata')
+    .select()
+    .eq('id', userId);
+
+  if (error) {
+    console.error("Database error:", error);
+    return { data: null, error: "Database query failed" };
+  }
+
+  return { data, error: null };
 };
