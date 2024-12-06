@@ -77,9 +77,9 @@ export default function PostRecipeForm(props: { postRecipe: (title: string, ingr
         <h2 className="text-white text-2xl font-semibold text-center">
           Recipe posted!
         </h2>
-        <p className="text-white text-lg font-normal text-center">
+        {/* <p className="text-white text-lg font-normal text-center">
           Click here to see it!
-        </p>
+        </p> */}
       </div>
     )}
     {submissionStatus != 0 && <br />}
