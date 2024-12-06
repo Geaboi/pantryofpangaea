@@ -26,6 +26,7 @@ export default function Profile() {
             ))}
           </ul>
         </div>
+      </div>
     </section>
   );
 }
