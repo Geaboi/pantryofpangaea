@@ -1,6 +1,4 @@
 "use client";
-import { Footer } from "../components/footer";
-import { Header } from "../components/header";
 import { useState } from "react";
 
 
@@ -34,8 +32,6 @@ export default function Contact() {
   };
 
   return (
-    <section className="bg-white">
-      <Header />
       <div className="max-w-2xl mx-auto p-6">
         <h1 className="text-3xl font-semibold text-center mb-6 text-black">Contact Us</h1>
 
@@ -50,7 +46,7 @@ export default function Contact() {
             placeholder="Your Name"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className="w-full px-4 py-2 border rounded-md focus:outline-none text-black"
+            className="w-full px-4 py-2 border rounded-md focus:outline-none text-black bg-white"
             required
           />
           <input
@@ -58,7 +54,7 @@ export default function Contact() {
             placeholder="Your Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="w-full px-4 py-2 border rounded-md focus:outline-none text-black"
+            className="w-full px-4 py-2 border rounded-md focus:outline-none text-black bg-white"
             required
           />
           <input
@@ -66,19 +62,19 @@ export default function Contact() {
             placeholder="Subject"
             value={subject}
             onChange={(e) => setSubject(e.target.value)}
-            className="w-full px-4 py-2 border rounded-md focus:outline-none text-black"
+            className="w-full px-4 py-2 border rounded-md focus:outline-none text-black bg-white"
             required
           />
           <textarea
             placeholder="Your Message"
             value={message}
             onChange={(e) => setMessage(e.target.value)}
-            className="w-full px-4 py-2 border rounded-md focus:outline-none h-32 text-black"
+            className="w-full px-4 py-2 border rounded-md focus:outline-none h-32 text-black bg-white"
             required
           ></textarea>
           <button
             type="submit"
-            className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition"
+            className="w-full bg-orange-500 text-white py-2 rounded-md hover:bg-orange-600 transition"
           >
             Send Message
           </button>
@@ -110,7 +106,5 @@ export default function Contact() {
           <a href="/tos" className="text-blue-600 hover:underline">Terms of Service</a>.
         </p>
       </div>
-      <Footer />
-    </section>
   );
 }

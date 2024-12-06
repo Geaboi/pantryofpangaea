@@ -1,12 +1,10 @@
 import { ReactNode } from 'react';
-import {Header} from "../components/header";
-import {Footer} from "../components/footer";
+
 
 export default function privacy() {
   return (
-    <section>
-      <Header></Header>
-    <div className="bg-white text-gray-800 min-h-screen p-8 sm:p-12 lg:p-20">
+    
+    
       <div className="max-w-3xl mx-auto">
         <h1 className="text-4xl font-bold text-center mb-6 text-gray-900">Privacy Policy</h1>
         <p className="text-center text-gray-600 mb-8">
@@ -67,9 +65,8 @@ export default function privacy() {
           If you have any questions or concerns about this Privacy Policy or our practices, please contact us at <a href="mailto:pantryofpangaea2@gmail.com" className="text-blue-600 mt-2">pantryofpangaea2@gmail.com</a>
         </PrivacySection>
       </div>
-    </div>
-    <Footer></Footer>
-    </section>
+    
+    
   );
 }
 
