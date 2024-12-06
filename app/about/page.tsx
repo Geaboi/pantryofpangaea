@@ -5,9 +5,16 @@ export default function about() {
   
         {/* Introduction */}
         <section className="mb-8">
-          <p className="text-lg text-gray-800 leading-relaxed">
-            Welcome to <span className="font-semibold text-blue-700">Pantry of Pangaea</span>, the social media platform for food enthusiasts around the world! Our mission is to connect people through the love of cooking and to build a diverse and inclusive community of home cooks, professional chefs, and everyone in between.
-          </p>
+        <p className="text-lg text-gray-800 leading-relaxed">
+          Welcome to{" "}
+          <a
+            href="/"
+            className="font-semibold text-blue-700 hover:underline"
+          >
+            Pantry of Pangaea
+         </a>
+          , the social media platform for food enthusiasts around the world! Our mission is to connect people through the love of cooking and to build a diverse and inclusive community of home cooks, professional chefs, and everyone in between.
+        </p>
         </section>
   
         {/* Our Vision */}
@@ -67,7 +74,7 @@ export default function about() {
             Whether you're a seasoned chef or a home cook trying out new recipes, Pantry of Pangaea is here to help you explore, create, and share. Join us and start discovering recipes from every corner of the world!
           </p>
           <a
-            href="/signup"
+            href="/sign-in"
             className="inline-block bg-blue-700 hover:bg-blue-800 text-white px-6 py-3 rounded-md text-lg font-medium"
           >
             Join Now
