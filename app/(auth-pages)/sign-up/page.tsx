@@ -43,10 +43,10 @@ export default async function Signup(props: {
           <SubmitButton formAction={signUpAction} pendingText="Signing up..." className="w-full bg-orange-500 text-white py-2 rounded-md hover:bg-orange-600 transition">
             Sign up
           </SubmitButton>
-          <FormMessage message={searchParams} />
+          {/* <FormMessage message={searchParams} /> */}
         </div>
       </form>
-      <SmtpMessage />
+      {/* <SmtpMessage /> */}
     </>
   );
 }
