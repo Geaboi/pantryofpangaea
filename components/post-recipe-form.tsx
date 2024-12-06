@@ -126,11 +126,13 @@ export default function PostRecipeForm(props: { postRecipe: (title: string, ingr
                         {tags.map((tag: ArrayEntryStruct, index: number) => (
                             <li className="my-2" key={index}>
                                 <input className="rounded-xl py-1 px-2 text-slate-300 dark:text-slate-800 bg-slate-800 dark:bg-slate-300" value={tag.content} onChange={(elem) => {
-                                    const tagRegex = /^[a-z_]*$/;
-                                    if(tagRegex.test(elem.target.value)) {
-                                        const nextTags: ArrayEntryStruct[] = updateStateArray(tags, {id: tag.id, content: elem.target.value});
+                                    // const spaceRegex = /[_ ]+/;
+                                    // const newTag = elem.target.value.toLowerCase().replace(spaceRegex, '_');
+                                    // const tagRegex = /^[a-z_]*$/;
+                                    // if(tagRegex.test(newTag)) {
+                                        const nextTags: ArrayEntryStruct[] = updateStateArray(tags, {id: tag.id, content: newTag});
                                         setTags(nextTags);
-                                    }
+                                    // }
                                 }} type="text" name={`tag${index}`} id={`tag${index}`} placeholder="Tag" required />
                                 {tags.length > 1 && <button type="button" className="mx-2 px-3 bg-slate-800 dark:bg-slate-300 text-slate-300 dark:text-slate-800 rounded-xl" name={`deletetag${tag.id}`} id={`deletetag${tag.id}`} onClick={() => {
                                     const nextTags: ArrayEntryStruct[] = removeStateArrayEntry(tags, tag.id);
