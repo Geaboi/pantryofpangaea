@@ -28,6 +28,29 @@ export const signUpAction = async (formData: FormData) => {
     console.error(error.code + " " + error.message);
     return encodedRedirect("error", "/sign-up", error.message);
   } else {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
+    if (!user) {
+      return redirect("/sign-in");
+    }
+
+    //Post data into the database
+    const {data: userData, error: userError} = await supabase
+      .from('userdata')
+      .insert({
+        id: user.id,
+        display_name: email.substring(0, email.indexOf('@')),
+        is_admin: false
+      });
+
+
+    if (userError) {
+      console.error("Error registering username: ", error);
+    } else {
+      console.log("Username registered successfully: ", userData);
+    }
     return redirect("/");
   }
 };
