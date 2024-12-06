@@ -24,6 +24,7 @@ export default async function Results(props: {
     .select()
     .eq('deleted', false)
     .contains('tags', tags)
+    .order('average_rating', {ascending: false})
     .range(0 + (currentPage * 50), 49 + (currentPage * 50));
 
   if (error)
