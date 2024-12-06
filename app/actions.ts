@@ -125,6 +125,7 @@ export const resetPasswordAction = async (formData: FormData) => {
 };
 
 export const signOutAction = async () => {
+  console.log("Signing out");
   const supabase = await createClient();
   await supabase.auth.signOut();
   return redirect("/sign-in");
@@ -323,3 +324,36 @@ export const getUser = async(userId : string) => {
 
   return { data, error: null };
 };
+
+export const getUserPosts = async(userId : string) => {
+  const supabase = await createClient();
+  const {data, error} = await supabase
+    .from('recipes')
+    .select("*")
+    .eq('deleted', false)
+    .eq('author', userId);
+
+    if (error) {
+      console.error("Database error:", error);
+      return { data: null, error: "Database query failed" };
+    }
+    console.log(data);
+    return { data, error: null };
+};
+
+export const deleteUserPost = async(recipeId: string) => {
+  const supabase = await createClient();
+
+  const { data, error } = await supabase
+    .from('recipes')
+    .update({ deleted: true }) // Update the 'deleted' column
+    .eq('id', recipeId); // Filter by recipe ID
+
+  if (error) {
+    console.error("Database error:", error);
+    return { data: null, error: "Failed to soft delete the recipe." };
+  }
+
+  console.log("Soft-deleted recipe:", data);
+  return { data, error: null };
+}
