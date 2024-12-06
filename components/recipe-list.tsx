@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { deleteUserPost } from "@/app/actions";
+import Link from "next/link";
 
 export default function RecipeList({ recipes }) {
   const [localRecipes, setLocalRecipes] = useState(recipes); //Updates the local recipes
@@ -28,35 +29,32 @@ export default function RecipeList({ recipes }) {
 
 
   return (
-    <div className="bg-white p-6 rounded-lg shadow-md mb-8">
-      <h2 className="text-2xl font-semibold text-gray-800 mb-4">
-        My Recipes
-      </h2>
-      <ul className="space-y-4">
-        {localRecipes && localRecipes.length > 0 ? (
-          localRecipes
-            .filter((recipe) => !recipe.deleted) // Filter out deleted recipes
-            .map((recipe) => (
-              <li
-                key={recipe.id}
-                className="flex justify-between items-center border-b pb-2"
+    <ul className="divide-y divide-gray-200">
+      {localRecipes && localRecipes.length > 0 ? (
+        localRecipes
+          .filter((recipe) => !recipe.deleted) // Filter out deleted recipes
+          .map((recipe) => (
+            <li
+              key={recipe.id}
+              className="flex justify-between items-center py-4"
+            >
+              <span className="text-gray-800 font-medium text-lg">
+                <Link href={`results/${encodeURIComponent(recipe.id)}`}>{recipe.title}</Link>
+              </span>
+              <span className="text-gray-500 text-sm mx-8">
+                {new Date(recipe.created_at).toLocaleDateString()}
+              </span>
+              <button
+                className="text-red-500 text-sm hover:underline"
+                onClick={() => handleDelete(recipe.id)}
               >
-                <span className="text-gray-700">{recipe.title}</span>
-                <span className="text-gray-500 text-sm">
-                  {new Date(recipe.created_at).toLocaleDateString()}
-                </span>
-                <button
-                  className="text-red-500 text-sm hover:underline"
-                  onClick={() => handleDelete(recipe.id)}
-                >
-                  Delete
-                </button>
-              </li>
-            ))
-        ) : (
-          <p className="text-gray-600">No recipes found.</p>
-        )}
-      </ul>
-    </div>
+                Delete
+              </button>
+            </li>
+          ))
+      ) : (
+        <p className="text-gray-600">No recipes found.</p>
+      )}
+    </ul>
   );
 }
