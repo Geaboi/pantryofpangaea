@@ -75,30 +75,6 @@ export default function Home() {
           ))}
         </div>
       </section>
-
-      {/* Footer */}
-      <footer className="bg-gray-900 text-white py-6">
-        <div className="container mx-auto text-center">
-          <p className="text-gray-400">&copy; 2024 Pantry of Pangaea. All rights reserved.</p>
-          <ul className="flex justify-center space-x-6 mt-4">
-            <li>
-              <Link href="/contact-us" className="hover:underline text-gray-300">
-                Contact Us
-              </Link>
-            </li>
-            <li>
-              <Link href="/terms" className="hover:underline text-gray-300">
-                Terms of Service
-              </Link>
-            </li>
-            <li>
-              <Link href="/about" className="hover:underline text-gray-300">
-                About
-              </Link>
-            </li>
-          </ul>
-        </div>
-      </footer>
     </>
   );
 }

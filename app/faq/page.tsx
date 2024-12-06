@@ -1,12 +1,7 @@
 import { ReactNode } from 'react';
-import { Footer } from "../components/footer";
-import {Header} from "../components/header";
 
 export default function FAQ() {
   return (
-    <section>
-      <Header></Header>
-    <div className="bg-white text-gray-800 min-h-screen p-8 sm:p-12 lg:p-20">
       <div className="max-w-3xl mx-auto">
         <h1 className="text-4xl font-bold text-center mb-6 text-gray-900">Frequently Asked Questions</h1>
         <p className="text-center text-gray-600 mb-8">
@@ -34,9 +29,6 @@ export default function FAQ() {
           If you have any issues or questions, please reach out to us via our <a href="/contact" className="text-blue-600 hover:underline">Contact Us</a> page.
         </FAQItem>
       </div>
-    </div>
-    <Footer></Footer>
-    </section>
   );
 }
 
