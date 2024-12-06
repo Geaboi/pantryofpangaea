@@ -9,9 +9,8 @@ export default async function Post() {
     return (
         <>
             <main>
-                <h1 className="text-5xl font-bold text-center">Post Recipe</h1>
-                <hr className="my-16" />
-                <PostRecipeForm postRecipe={postRecipeNew} />
+            <h1 className="text-4xl font-semibold text-center text-orange-600 mb-6 tracking-wide">Post Recipe</h1>
+            <PostRecipeForm postRecipe={postRecipeNew} />
             </main>
         </>
     );
