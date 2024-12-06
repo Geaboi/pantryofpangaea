@@ -2,7 +2,7 @@ import { ReactNode } from "react";
 
 export default function EULA() {
     return (
-      <div className="bg-white text-gray-800 min-h-screen p-8 sm:p-12 lg:p-20">
+      <div className="text-gray-800 min-h-screen p-8 sm:p-12 lg:p-20">
         <div className="max-w-3xl mx-auto">
           <h1 className="text-4xl font-bold text-center mb-6 text-gray-900">End User License Agreement (EULA)</h1>
           <p className="text-center text-gray-600 mb-8">
