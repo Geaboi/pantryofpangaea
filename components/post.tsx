@@ -5,7 +5,7 @@ import { useFormStatus } from "react-dom";
 
 
 
-export default function PostRecipe({formAction}) {
+export default function PostRecipe(props: {formAction: (formData: {recipe: string, ingredients: string, category: string, description: string}) => void}) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [recipe, setRecipe] = useState('');
   const [ingredients, setIngredients] = useState('');
@@ -19,7 +19,7 @@ export default function PostRecipe({formAction}) {
   const handleSubmit = async(e) => {
     e.preventDefault();
     const formData = { recipe, ingredients, category, description };
-    await formAction(formData);
+    await props.formAction(formData);
     toggleModal();
   }
 
