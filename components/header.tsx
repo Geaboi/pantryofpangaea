@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { signOutAction } from "@/app/actions";
 import { createClient } from "@/utils/supabase/server";
 import SearchBar from "@/components/search-bar";
 
@@ -39,9 +40,11 @@ export default async function Header() {
             <Link href="/post" className="hover:underline">
               Post Recipe
             </Link>
-            <Link href="/ERRORPAGE" className="hover:underline">
-              Log Out
-            </Link>
+            <form onSubmit={signOutAction}>
+              <button type="submit" className="hover:underline">
+                Log Out
+              </button>
+            </form>
           </>}
         </div>
       </nav>
