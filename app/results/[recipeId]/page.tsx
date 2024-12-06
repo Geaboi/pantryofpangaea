@@ -7,7 +7,6 @@ import { brotliCompressSync } from "zlib";
 
 
 
-
 export default async function RecipeDetails({ params }: { params: { recipeId: string } }) {
     //Next js somehow thinks this is dynamic
     const { recipeId } = await params;

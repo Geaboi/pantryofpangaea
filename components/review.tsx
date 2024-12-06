@@ -2,18 +2,24 @@
 
 import { useState } from "react";
 import { useFormStatus } from "react-dom";
-
+import { useRouter, usePathname } from "next/navigation";
 
 
 export default function PostReview({ formAction , recipeId}) {
-  const [review, setReview] = useState('');
-  const [rating, setRating] = useState("");
+    const [review, setReview] = useState('');
+    const [rating, setRating] = useState("");
+
+    const router = useRouter();
+    const pathname = usePathname();
 
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (review.trim()) {
-            await formAction({ review, rating ,recipeId });
+            const result = await formAction({ review: review.trim(), rating ,recipeId });
+            if(result) {
+                router.push(pathname);
+            }
         }
     };
   

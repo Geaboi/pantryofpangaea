@@ -5,7 +5,7 @@ export default function Home() {
   return (
     <>
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-orange-400 to-pink-500 text-white py-20 text-center">
+      <section className="bg-gradient-to-r from-orange-400 to-pink-500 text-white py-20 text-center rounded-3xl">
         <h1 className="text-5xl lg:text-7xl font-extrabold mb-6">
           Welcome to the Pantry of Pangaea
         </h1>
