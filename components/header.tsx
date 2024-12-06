@@ -37,6 +37,9 @@ export default async function Header() {
 
           {/* Signed In */}
           {user && <>
+            <Link href="/profile" className="hover:underline">
+              My Recipes
+            </Link>
             <Link href="/post" className="hover:underline">
               Post Recipe
             </Link>
