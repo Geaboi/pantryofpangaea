@@ -30,6 +30,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <link rel="icon" type="image/svg" sizes="any" href="/icon.svg" />
+      </head>
       <body>
         <ThemeProvider
           attribute="data-mode"
